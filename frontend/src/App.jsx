@@ -41,7 +41,7 @@ function ChangeView({ center, zoom }) {
   return null;
 }
 
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = 'https://resqdrive-1.onrender.com';
 
 function App() {
   const [logs, setLogs] = useState([
