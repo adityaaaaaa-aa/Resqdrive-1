@@ -23,7 +23,7 @@ const Registration = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success' or 'error'
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -70,7 +70,7 @@ const Registration = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) {
         const firstErrorTrigger = document.querySelector('.border-red-500');
@@ -81,21 +81,13 @@ const Registration = () => {
     }
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+    // Simulate API call
+    setTimeout(() => {
       console.log('Form Data to Send:', formData);
-      setSubmitStatus('success');
-      // Reset form on success or redirect
-      // setFormData({...initialState});
-    } catch (error) {
-       console.error("Submission failed", error);
-       setSubmitStatus('error');
-    } finally {
       setIsSubmitting(false);
-    }
+      setIsSubmitted(true);
+    }, 1500);
   };
 
   const inputClass = "w-full bg-[#1A1A24] border border-[#333344] text-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#00FFAA] focus:border-transparent transition-all duration-300 placeholder-gray-500";
@@ -103,7 +95,7 @@ const Registration = () => {
   const labelClass = "block text-sm font-medium text-gray-400 mb-2";
 
   return (
-    <div className="min-h-screen bg-[#0D0D14] text-gray-100 font-sans selection:bg-[#00FFAA] selection:text-[#0D0D14] p-4 md:p-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-[#0D0D14] text-gray-900 dark:text-gray-100 font-sans selection:bg-[#00FFAA] selection:text-[#0D0D14] p-4 md:p-8 transition-colors duration-300">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#00FFAA]/5 blur-[120px] rounded-full mix-blend-screen"></div>
@@ -121,7 +113,7 @@ const Registration = () => {
                 </button>
                 <div className="flex items-center gap-3 mb-2">
                     <Shield className="w-8 h-8 text-[#00FFAA]" />
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-500 dark:from-white dark:to-gray-400">
                     Resqdrive Registry
                     </h1>
                 </div>
@@ -130,30 +122,30 @@ const Registration = () => {
             
         </div>
 
-        {submitStatus === 'success' ? (
-             <div className="bg-[#1A1A24]/80 backdrop-blur-md rounded-2xl border border-[#00FFAA]/30 p-12 text-center transform transition-all animate-in fade-in zoom-in duration-500">
-                <div className="w-20 h-20 bg-[#00FFAA]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        {isSubmitted ? (
+             <div className="bg-white/80 dark:bg-[#1A1A24]/80 backdrop-blur-md rounded-2xl border border-gray-300 dark:border-[#00FFAA]/30 p-12 text-center transform transition-all animate-in fade-in zoom-in duration-500 shadow-sm dark:shadow-none">
+                <div className="w-20 h-20 bg-[#00FFAA]/10 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(0,255,170,0.2)]">
                     <CheckCircle className="w-10 h-10 text-[#00FFAA]" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-4">Registration Successful</h2>
-                <p className="text-gray-400 mb-8 max-w-md mx-auto">
-                    Your emergency profile has been securely registered. First responders will now have access to this critical information in the event of an accident.
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 tracking-wider">REGISTRATION SUCCESSFUL</h2>
+                <p className="text-gray-400 mb-8 max-w-md mx-auto font-mono text-sm leading-relaxed">
+                    Thank you for registering. Your emergency profile and static medical telemetry have been securely saved.
                 </p>
                 <button 
-                    onClick={() => navigate('/dashboard')}
-                    className="bg-gradient-to-r from-[#00FFAA] to-[#00CC88] text-[#0D0D14] font-bold py-3 px-8 rounded-lg hover:shadow-[0_0_20px_rgba(0,255,170,0.4)] transition-all duration-300"
+                    onClick={() => navigate('/')}
+                    className="bg-gradient-to-r from-[#00FFAA] to-[#00CC88] text-[#0D0D14] font-bold py-3 px-8 rounded-lg hover:shadow-[0_0_20px_rgba(0,255,170,0.4)] transition-all duration-300 font-mono tracking-widest uppercase"
                 >
-                    Proceed to Dashboard
+                    &lt; RETURN TO LOGIN
                 </button>
              </div>
         ) : (
             <form onSubmit={handleSubmit} className="space-y-8">
             
             {/* Section 1: Personal & Vehicle Details */}
-            <div className="bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-[#333344] p-6 md:p-8 hover:border-[#444455] transition-colors">
+            <div className="bg-white/60 dark:bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-gray-300 dark:border-[#333344] p-6 md:p-8 hover:border-gray-400 dark:hover:border-[#444455] transition-colors">
                 <div className="flex items-center gap-3 mb-6 border-b border-[#333344] pb-4">
                 <Car className="w-6 h-6 text-[#0088FF]" />
-                <h2 className="text-xl font-semibold text-white">Personal & Vehicle Details</h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Personal & Vehicle Details</h2>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -209,10 +201,10 @@ const Registration = () => {
             </div>
 
             {/* Section 2: Critical Health Information */}
-            <div className="bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-[#333344] p-6 md:p-8 hover:border-[#444455] transition-colors">
+            <div className="bg-white/60 dark:bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-gray-300 dark:border-[#333344] p-6 md:p-8 hover:border-gray-400 dark:hover:border-[#444455] transition-colors">
                 <div className="flex items-center gap-3 mb-6 border-b border-[#333344] pb-4">
                 <HeartPulse className="w-6 h-6 text-[#FF3366]" />
-                <h2 className="text-xl font-semibold text-white">Critical Health Information</h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Critical Health Information</h2>
                 </div>
 
                 <div className="space-y-6">
@@ -262,10 +254,10 @@ const Registration = () => {
             </div>
 
             {/* Section 3: Emergency Contacts */}
-            <div className="bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-[#333344] p-6 md:p-8 hover:border-[#444455] transition-colors">
+            <div className="bg-white/60 dark:bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border border-gray-300 dark:border-[#333344] p-6 md:p-8 hover:border-gray-400 dark:hover:border-[#444455] transition-colors">
                 <div className="flex items-center gap-3 mb-6 border-b border-[#333344] pb-4">
                 <Phone className="w-6 h-6 text-[#00FFAA]" />
-                <h2 className="text-xl font-semibold text-white">Emergency Contacts</h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Emergency Contacts</h2>
                 </div>
 
                 <div className="space-y-8">
@@ -368,7 +360,7 @@ const Registration = () => {
             </div>
 
             {/* Section 4: Consent & Security */}
-            <div className={`bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border ${errors.consent ? 'border-red-500' : 'border-[#333344]'} p-6 md:p-8 transition-colors`}>
+            <div className={`bg-white/60 dark:bg-[#1A1A24]/60 backdrop-blur-sm rounded-2xl border ${errors.consent ? 'border-red-500' : 'border-gray-300 dark:border-[#333344]'} p-6 md:p-8 transition-colors`}>
                 <label className="flex items-start gap-4 cursor-pointer group">
                 <div className="relative flex items-center justify-center mt-1">
                     <input
@@ -390,12 +382,7 @@ const Registration = () => {
                 </label>
             </div>
 
-            {submitStatus === 'error' && (
-                <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-4 flex items-center gap-3 text-red-400">
-                    <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                    <p>There was an error submitting your registration. Please try again.</p>
-                </div>
-            )}
+
 
             {/* Submit Button */}
             <div className="flex justify-end pt-4">

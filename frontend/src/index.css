@@ -3,6 +3,25 @@
 @tailwind utilities;
 
   :root {
+    --red: #e60012;
+    --red-dim: rgba(230,0,18,0.15);
+    --cyan: #0088cc;
+    --cyan-dim: rgba(0,136,204,0.12);
+    --amber: #f59e0b;
+    --green: #10b981;
+    --bg: #f8fafc;
+    --bg2: #f1f5f9;
+    --surface: #ffffff;
+    --surface2: #e2e8f0;
+    --border: rgba(0,0,0,0.1);
+    --text: #0f172a;
+    --text-dim: #475569;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-ui: 'Rajdhani', sans-serif;
+    --font-display: 'Orbitron', sans-serif;
+  }
+
+  .dark {
     --red: #ff1a2e;
     --red-dim: rgba(255,26,46,0.15);
     --cyan: #00e5ff;
@@ -16,9 +35,6 @@
     --border: rgba(0,229,255,0.15);
     --text: #c8d8f0;
     --text-dim: #4a6080;
-    --font-mono: 'Share Tech Mono', monospace;
-    --font-ui: 'Rajdhani', sans-serif;
-    --font-display: 'Orbitron', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
